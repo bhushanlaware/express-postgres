@@ -17,9 +17,18 @@ const getAllUsers = async (req, res, next) => {
     console.error(error);
     res.status(500).send({ error });
   }
-
+}
+const getUserByUsername = async (req, res, next) => {
+  try {
+    const result = await userServices.getUserByUsername(req.params.username);
+    res.send(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error });
+  }
 }
 module.exports = {
  getUsersCreatedIn,
  getAllUsers,
+ getUserByUsername,
 }
