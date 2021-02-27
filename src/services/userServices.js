@@ -11,6 +11,18 @@ const getUsersCreatedIn = async (startTime, endTime) => {
     });
     return users;
 };
+const createUser = async (user) => {
+    const users = await User.create(user);
+    return users;
+};
+const updateUser = async (user, id) => {
+    const users = await User.update(user, { where: { id } });
+    return users;
+};
+const deleteByUsername = async (username) => {
+    const users = await User.destroy({ where: { username } });
+    return users;
+};
 const getAllUsers = async () => {
     const users = await User.findAll();
     return users;
@@ -21,6 +33,9 @@ const getUserByUsername = async (username) => {
 };
 module.exports = {
     getUsersCreatedIn,
+    deleteByUsername,
+    createUser,
+    updateUser,
     getAllUsers,
     getUserByUsername,
 }

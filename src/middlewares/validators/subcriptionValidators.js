@@ -1,15 +1,21 @@
 const { check } = require('express-validator');
 const validationHelper = require('../../libs/validate');
 const errorMessages = require('../../utils/errorMessages');
-const tracksSearchValidator = {
-  checkParams: [
-    check('start_tis')
+const createSubcription = {
+  checkBody: [
+    check('username')
       .exists()
       .not()
       .isEmpty()
       .isString()
       .withMessage(errorMessages.ValidationError),
-    check('end_tis')
+    check('PlanId')
+      .exists()
+      .not()
+      .isEmpty()
+      .isString()
+      .withMessage(errorMessages.ValidationError),
+    check('startDate')
       .exists()
       .not()
       .isEmpty()
@@ -21,4 +27,4 @@ const tracksSearchValidator = {
   ],
 };
 
-module.exports = { tracksSearchValidator };
+module.exports = { createSubcription };
