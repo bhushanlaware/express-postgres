@@ -1,18 +1,33 @@
-const { Op } = require('sequelize');
 const Subscription = require("../db/models").Subscription;
 const Plan = require("../db/models").Plan;
-const addDays = require('../libs/common');
+const { addDays, differnceInDays } = require('../libs/common');
 
 
 const createSubscription = async (subscription) => {
-    const { planId, startDate, username } = subscription;
-    const plan = await Plan.fineOne({ where: { planId: planId } });
-    const sub = await Subscription.create({ 
+    const { planId, startDate } = subscription;
+    const plan = await Plan.findOne({ where: { planId: planId } });
+    const sub = await Subscription.create({
         ...subscription,
-         validTill: addDays(plan.validDays, startDate),
-         });
-    return sub;
+        validTill: addDays(plan.validDays, startDate),
+        amount: -(plan.amount),
+    }, { raw: true });
+    return sub && sub.id ?
+        { status: 'SUCCESS', amount: sub.amount } :
+        { status: 'FAILIURE', amount: sub.amount };
+};
+const getSubscriptions = async (username, startdate) => {
+    const whereCondition = startDate ? { username, startdate } : { username };
+    const subs = await Subscription.findAll({ where: whereCondition, raw: true, nest: true });
+    return startdate ?
+        subs.map(x => (
+            {
+                planId: x.planId,
+                daysLeft: differnceInDays(x.startDate, x.validTill),
+            }
+        )) :
+        subs;
 };
 module.exports = {
     createSubscription,
+    getSubscriptions,
 }

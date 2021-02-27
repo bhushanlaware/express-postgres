@@ -20,6 +20,9 @@ module.exports = {
       validTill: {
         type: Sequelize.DATE
       },
+      amount: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
