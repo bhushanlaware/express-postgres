@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const userControllers = require('../controllers/userControllers');
+const subscriptionController = require('../controllers/subscriptionController');
 
 /* GET users listing. */
-router.get('/users', userControllers.getAllUsers);
-router.get('/user/:username', userControllers.getUserByUsername);
+router.get('/subscription/:username', subscriptionController.getSubscriptions);
+router.get('/subscription/:username/:startdate', subscriptionController.getSubscriptions);
 
 module.exports = router;

@@ -9,6 +9,16 @@ const createSubscription = async (req, res, next) => {
     res.status(requestStatus.UnprocessableEntity).send(error);
   }
 }
+const getSubscriptions = async (req, res, next) => {
+  try {
+    const result = await subscriptionServices.getSubscriptions(req.params.username, req.params.startdate);
+    res.send(result);
+  } catch (error) {
+    console.error(error);
+    res.status(requestStatus.UnprocessableEntity).send(error);
+  }
+}
 module.exports = {
-  createSubscription
+  createSubscription,
+  getSubscriptions
 }
