@@ -15,10 +15,10 @@ const createSubscription = async (subscription) => {
         { status: 'SUCCESS', amount: sub.amount } :
         { status: 'FAILIURE', amount: sub.amount };
 };
-const getSubscriptions = async (username, startdate) => {
-    const whereCondition = startDate ? { username, startdate } : { username };
+const getSubscriptions = async (username, startDate = false) => {
+    const whereCondition = startDate ? { username, startDate } : { username };
     const subs = await Subscription.findAll({ where: whereCondition, raw: true, nest: true });
-    return startdate ?
+    return startDate ?
         subs.map(x => (
             {
                 planId: x.planId,

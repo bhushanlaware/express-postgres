@@ -4,6 +4,7 @@ const router = express.Router();
 
 const routes = [
   require('./userRoutes'),
+  require('./subscriptionRoutes'),
 ];
 
 router.use('/', routes);
